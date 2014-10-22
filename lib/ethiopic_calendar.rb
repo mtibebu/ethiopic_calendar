@@ -88,6 +88,11 @@ module EthiopicCalendar
     	date="#{month_name} #{day} ቀን  #{year}ዓ/ም"
     end
 
+    # Returns true if the year provided is a leap year.
+  	def isLeap(year)
+  		return (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0))
+  	end
+
     private
       #Calculates the jdn from given Gregorian calendar
       #
@@ -130,7 +135,7 @@ module EthiopicCalendar
 			date[:month] = 12
 			date[:day] = 31
 		else
-			MonthDays[2] = isGregorianLeap(date[:year]) ? 29 : 28
+			MonthDays[2] = isLeap(date[:year]) ? 29 : 28
 			for i in 1..Nmonths
 				if (n <= MonthDays[i])
 					date[:day] = n
@@ -143,9 +148,5 @@ module EthiopicCalendar
 		
 		return gregorian_date
 	end
-	
-	def isGregorianLeap(year)
-		return (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0))
-	end
-	    
+		    
 end
